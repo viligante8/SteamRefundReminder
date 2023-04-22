@@ -1,10 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import SteamService from './lib/steam_service';
+import { Game } from './types';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [ownedGames, setOwnedGames] = useState<Game[]>();
+  const [ownedGameCount, setOwnedGameCount] = useState(0);
+  useEffect(() => {
+    (async () => {
+      const og = await SteamService.getOwnedGames();
+      setOwnedGames(og.games);
+      setOwnedGameCount(og.game_count);
+    })();
+  }, []);
 
   return (
     <>
@@ -18,9 +28,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count - 3)}>
-          count is {count}
-        </button>
+        count is {ownedGameCount}
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
