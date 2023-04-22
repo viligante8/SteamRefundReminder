@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "npx tsc && vite build",
+    "start": "vite",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "vite:build": "tsc && vite build",
+    "docker:build": "docker build -t steam-refund-reminder ."
   },
   "dependencies": {
     "react": "^18.2.0",

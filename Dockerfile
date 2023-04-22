@@ -1,22 +1,23 @@
 # Name the node stage "builder"
-FROM node:15-alpine AS builder
+FROM node:20-alpine AS builder
 
 # Set working directory
-WORKDIR /app
+WORKDIR /dist
 
-# Copy our node module specification
+# Copy our node package specification
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 
-# install node modules and build assets
-RUN npm install --production
+# install production dependencies
+RUN npm install
 
 # Copy all files from current directory to working dir in image
-# Except the one defined in '.dockerignore'
+# Except the ones defined in '.dockerignore'
 COPY . .
 
-# Create production build of React App
-RUN npm run build
+# Build the app
+RUN npm run vite:build
+
 
 # Choose NGINX as our base Docker image
 FROM nginx:alpine
@@ -28,7 +29,7 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf *
 
 # Copy static assets from builder stage
-COPY --from=builder /app/build .
+COPY --from=builder /dist/dist .
 
 # Entry point when Docker container has started
 ENTRYPOINT ["nginx", "-g", "daemon off;"]

@@ -1,6 +1,7 @@
 .gitignore
 .dockerignore
 Dockerfile
-build
+dist
+*.code-workspace
 node_modules
 README.md
