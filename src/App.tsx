@@ -13,6 +13,7 @@ function App() {
       const og = await SteamService.getOwnedGames();
       setOwnedGames(og.games);
       setOwnedGameCount(og.game_count);
+      console.log('owned games', ownedGames);
     })();
   }, []);
 
