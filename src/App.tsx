@@ -14,6 +14,7 @@ function App() {
       setOwnedGames(og.games);
       setOwnedGameCount(og.game_count);
       console.log('owned games', ownedGames);
+      console.log('owned game count', ownedGameCount);
     })();
   }, []);
 
